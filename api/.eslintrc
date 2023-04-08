@@ -10,9 +10,12 @@
 		"plugin:@typescript-eslint/recommended",
 		"prettier"
 	],
+	"ignorePatterns": [
+		"**/*.js",
+		"test/"
+	],
 	"rules": {
 		"no-console": "error",
-		"import/no-unresolved": "error",
 		"import/extensions": "off",
 		"no-param-reassign": ["error", {"props": false}],
 		"no-underscore-dangle": "off",
