@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
+import cors from 'cors'
 
 import { todoRouter } from './todo'
 import { logger } from './core/logger'
@@ -12,6 +13,7 @@ const port = 3000
 const app: Application = express()
 
 app.use(bodyParser.json())
+app.use(cors())
 app.use(
 	morgan(':method :url :status :res[content-length] - :response-time ms', {
 		stream: { write: msg => logger.http(msg) },
