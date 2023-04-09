@@ -2,6 +2,7 @@ import { Router } from 'express'
 
 import {
 	createTodo,
+	deleteTodo,
 	getTodoById,
 	getTodos,
 	updatePartialTodo,
@@ -10,19 +11,11 @@ import {
 
 const router = Router()
 
-// Get all todos
 router.get('/', getTodos)
-
-// Get todo
 router.get('/:id', getTodoById)
-
-//Add todo
 router.post('/', createTodo)
-
-// Patch todo
 router.patch('/:id', updatePartialTodo)
-
-// Put todo
 router.put('/:id', updateTodo)
+router.delete('/:id', deleteTodo)
 
 export { router }

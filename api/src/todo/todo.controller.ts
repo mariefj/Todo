@@ -63,3 +63,15 @@ export const updateTodo = async (req: Request, res: Response) => {
 		return res.status(500).json({ message: 'Error updating todo' })
 	}
 }
+
+export const deleteTodo = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.id
+		if (!mongoose.isValidObjectId(id))
+			return res.status(400).json({ message: 'Id not valid' })
+		await TodoModel.findByIdAndDelete(id)
+		return res.status(204).end()
+	} catch {
+		return res.status(500).json({ message: 'Error deleting todo' })
+	}
+}
