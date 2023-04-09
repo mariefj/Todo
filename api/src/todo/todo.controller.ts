@@ -2,7 +2,7 @@ import type { Request, Response } from 'express'
 import mongoose from 'mongoose'
 
 import { TodoModel } from './todo.model'
-import { logger } from 'core/logger'
+import { logger } from '../core/logger'
 
 export const getTodos = async (_req: Request, res: Response) => {
 	try {
