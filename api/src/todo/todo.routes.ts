@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { getTodoById, getTodos } from './todo.controller'
+import { createTodo, getTodoById, getTodos } from './todo.controller'
 
 const router = Router()
 
@@ -9,5 +9,8 @@ router.get('/', getTodos)
 
 // Get todo
 router.get('/:id', getTodoById)
+
+//Add todo
+router.post('/', createTodo)
 
 export { router }

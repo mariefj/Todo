@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express'
+import mongoose from 'mongoose'
 
 import { TodoModel } from './todo.model'
-import mongoose from 'mongoose'
 
 export const getTodos = async (_req: Request, res: Response) => {
 	try {
@@ -27,5 +27,14 @@ export const getTodoById = async (req: Request, res: Response) => {
 		res.status(200).json(todo)
 	} catch (error) {
 		res.status(500).json({ message: 'Error retrieving todo' })
+	}
+}
+
+export const createTodo = async (req: Request, res: Response) => {
+	try {
+		const todo = await TodoModel.create(req.body)
+		res.status(201).json(todo)
+	} catch (e) {
+		res.status(500).json({ message: 'Error creating todo' })
 	}
 }
