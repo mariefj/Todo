@@ -1,5 +1,6 @@
 import React from 'react'
 import compareAsc from 'date-fns/compareAsc'
+import _ from 'lodash'
 
 import { useLazyChangeTodoStateQuery, useListTodoQuery } from './listTodo.api'
 import { TodoFromBack } from '../../common/models/todo'
@@ -7,6 +8,10 @@ import { TodoFromBack } from '../../common/models/todo'
 type PropsTodo = TodoFromBack
 export const Todo = ({ _id, title, isDone }: PropsTodo) => {
 	const [query] = useLazyChangeTodoStateQuery()
+	const queryDebounce = React.useMemo(() => _.debounce(query, 1000), [query])
+
+	const [done, setDone] = React.useState(isDone)
+
 	return (
 		<div key={_id}>
 			<a href={`/${_id}`}>{title}</a>
@@ -14,8 +19,11 @@ export const Todo = ({ _id, title, isDone }: PropsTodo) => {
 				<p>state: </p>
 				<input
 					type='checkbox'
-					checked={isDone}
-					onChange={() => query({ id: _id, isDone: !isDone })}
+					checked={done}
+					onChange={() => {
+						setDone(!done)
+						queryDebounce({ id: _id, isDone: !done })
+					}}
 				/>
 			</div>
 		</div>
