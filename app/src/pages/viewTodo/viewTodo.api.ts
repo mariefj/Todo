@@ -6,10 +6,16 @@ const listTodoApi = todoApi.injectEndpoints({
 		viewTodo: builder.query<TodoFromBack, { id: string }>({
 			query: ({ id }) => `todos/${id}`,
 		}),
+		deleteTodo: builder.query<TodoFromBack, { id: string }>({
+			query: ({ id }) => ({
+				url: `todos/${id}`,
+				method: 'DELETE',
+			}),
+		}),
 	}),
 	overrideExisting: false,
 })
 
-export const { useViewTodoQuery } = listTodoApi
+export const { useViewTodoQuery, useLazyDeleteTodoQuery } = listTodoApi
 
 export default listTodoApi
