@@ -8,6 +8,7 @@ import { store } from './store'
 import './index.css'
 import ListTodo from './pages/listTodos'
 import ViewTodo from './pages/viewTodo'
+import CreateTodo from './pages/createTodo'
 
 const router = createBrowserRouter([
 	{
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
 	{
 		path: '/:id',
 		element: <ViewTodo />,
+	},
+	{
+		path: '/createTodo',
+		element: <CreateTodo />,
 	},
 ])
 
