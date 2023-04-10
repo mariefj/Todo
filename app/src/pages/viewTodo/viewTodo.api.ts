@@ -1,4 +1,4 @@
-import { TodoFromBack } from '../../common/models/todo'
+import { Todo, TodoFromBack } from '../../common/models/todo'
 import { todoApi } from '../../store/api'
 
 const listTodoApi = todoApi.injectEndpoints({
@@ -12,10 +12,28 @@ const listTodoApi = todoApi.injectEndpoints({
 				method: 'DELETE',
 			}),
 		}),
+		changeTodoDescription: builder.query<
+			TodoFromBack,
+			{ id: string } & Todo
+		>({
+			query: ({ id, description, isDone, title }) => ({
+				url: `todos/${id}`,
+				method: 'PUT',
+				body: {
+					description,
+					isDone,
+					title,
+				},
+			}),
+		}),
 	}),
 	overrideExisting: false,
 })
 
-export const { useViewTodoQuery, useLazyDeleteTodoQuery } = listTodoApi
+export const {
+	useViewTodoQuery,
+	useLazyDeleteTodoQuery,
+	useLazyChangeTodoDescriptionQuery,
+} = listTodoApi
 
 export default listTodoApi
