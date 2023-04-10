@@ -10,12 +10,13 @@ export const Todo = z.object({
 })
 
 // Schema
-const TodoSchema = new Schema({
-	title: { type: String, required: true },
-	description: { type: String },
-	isDone: { type: Boolean, required: true },
-	createdAt: { type: Date, default: Date.now },
-	updatedAt: { type: Date, default: Date.now },
-})
+const TodoSchema = new Schema(
+	{
+		title: { type: String, required: true },
+		description: { type: String },
+		isDone: { type: Boolean, required: true },
+	},
+	{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
+)
 
 export const TodoModel = model('Todo', TodoSchema)
