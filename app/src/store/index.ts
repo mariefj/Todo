@@ -1,7 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { todoApi } from './api'
 
 export const store = configureStore({
-	reducer: {},
+	reducer: {
+		[todoApi.reducerPath]: todoApi.reducer,
+	},
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware().concat(todoApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
