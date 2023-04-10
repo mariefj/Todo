@@ -10,7 +10,7 @@ export const ListTodo = () => {
 	return (
 		<div>
 			{data?.map(todo => (
-				<a key={todo._id} href={`/view/${todo._id}`}>
+				<a key={todo._id} href={`/${todo._id}`}>
 					<div>{todo.title}</div>
 					<div>{todo.isDone ? 'done' : 'not done'}</div>
 				</a>

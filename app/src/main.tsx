@@ -7,11 +7,16 @@ import { store } from './store'
 
 import './index.css'
 import ListTodo from './pages/listTodos'
+import ViewTodo from './pages/viewTodo'
 
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <ListTodo />,
+	},
+	{
+		path: '/:id',
+		element: <ViewTodo />,
 	},
 ])
 
