@@ -20,7 +20,7 @@ export const getTodoById = async (req: Request, res: Response) => {
 			return res.status(400).json({ message: 'Id not valid' })
 		const todo = await TodoModel.findById(id)
 		if (!todo) return res.status(404).json({ message: 'Todo not found' })
-		return res.status(200).json(todo)
+		return res.status(200).json(todo.toJSON())
 	} catch (error) {
 		logger.error(error)
 		return res.status(500).json({ message: 'Error retrieving todo' })
@@ -30,7 +30,7 @@ export const getTodoById = async (req: Request, res: Response) => {
 export const createTodo = async (req: Request, res: Response) => {
 	try {
 		const todo = await TodoModel.create(req.body)
-		res.status(201).json(todo)
+		res.status(201).json(todo.toJSON())
 	} catch (error) {
 		logger.error(error)
 		res.status(500).json({ message: 'Error creating todo' })
@@ -46,7 +46,7 @@ export const updatePartialTodo = async (req: Request, res: Response) => {
 			new: true,
 		})
 		if (!todo) return res.status(404).json({ message: 'Todo not found' })
-		return res.status(200).json(todo)
+		return res.status(200).json(todo.toJSON())
 	} catch (error) {
 		logger.error(error)
 		return res.status(500).json({ message: 'Error updating todo' })
@@ -56,13 +56,17 @@ export const updatePartialTodo = async (req: Request, res: Response) => {
 export const updateTodo = async (req: Request, res: Response) => {
 	try {
 		const id = req.params.id
-		if (!mongoose.isValidObjectId(id))
+		const todoFromBody = new TodoModel(req.body)
+		if (
+			!mongoose.isValidObjectId(id) ||
+			todoFromBody.validateSync() !== undefined
+		)
 			return res.status(400).json({ message: 'Id not valid' })
 		const todo = await TodoModel.findOneAndReplace({ _id: id }, req.body, {
 			returnDocument: 'after',
 		}).exec()
 		if (!todo) return res.status(404).json({ message: 'Todo not found' })
-		return res.status(200).json(todo)
+		return res.status(200).json(todo.toJSON())
 	} catch (error) {
 		logger.error(error)
 		return res.status(500).json({ message: 'Error updating todo' })
