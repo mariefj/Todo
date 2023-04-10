@@ -1,7 +1,15 @@
+import { TodoFromBack } from '../../common/models/todo'
 import { todoApi } from '../../store/api'
 
-todoApi.injectEndpoints({
-	endpoints: builder => ({}),
+const listTodoApi = todoApi.injectEndpoints({
+	endpoints: builder => ({
+		listTodo: builder.query<TodoFromBack[], void>({
+			query: () => 'todos/',
+		}),
+	}),
+	overrideExisting: false,
 })
 
-export default todoApi
+export const { useListTodoQuery } = listTodoApi
+
+export default listTodoApi
