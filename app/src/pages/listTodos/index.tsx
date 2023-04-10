@@ -1,7 +1,26 @@
 import React from 'react'
 import compareAsc from 'date-fns/compareAsc'
 
-import { useListTodoQuery } from './listTodo.api'
+import { useLazyChangeTodoStateQuery, useListTodoQuery } from './listTodo.api'
+import { TodoFromBack } from '../../common/models/todo'
+
+type PropsTodo = TodoFromBack
+export const Todo = ({ _id, title, isDone }: PropsTodo) => {
+	const [query] = useLazyChangeTodoStateQuery()
+	return (
+		<div key={_id}>
+			<a href={`/${_id}`}>{title}</a>
+			<div>
+				<p>state: </p>
+				<input
+					type='checkbox'
+					checked={isDone}
+					onChange={() => query({ id: _id, isDone: !isDone })}
+				/>
+			</div>
+		</div>
+	)
+}
 
 export const ListTodo = () => {
 	const { data, error, isError, isLoading } = useListTodoQuery()
@@ -23,18 +42,12 @@ export const ListTodo = () => {
 			{sortedArray
 				?.filter(todo => todo.isDone === false)
 				?.map(todo => (
-					<a key={todo._id} href={`/${todo._id}`}>
-						<div>{todo.title}</div>
-						<div>{todo.isDone ? 'done' : 'not done'}</div>
-					</a>
+					<Todo key={todo._id} {...todo} />
 				))}
 			{sortedArray
 				?.filter(todo => todo.isDone === true)
 				?.map(todo => (
-					<a key={todo._id} href={`/${todo._id}`}>
-						<div>{todo.title}</div>
-						<div>{todo.isDone ? 'done' : 'not done'}</div>
-					</a>
+					<Todo key={todo._id} {...todo} />
 				))}
 		</div>
 	)
