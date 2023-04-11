@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
@@ -23,17 +24,20 @@ const ErrorPage = () => {
 
 const router = createBrowserRouter([
 	{
-		path: '/',
+		// @ts-ignore
+		path: `${window.globalConfig.BASE_PATH}/`,
 		element: <ListTodo />,
 		errorElement: <ErrorPage />,
 	},
 	{
-		path: '/:id',
+		// @ts-ignore
+		path: `${window.globalConfig.BASE_PATH}/:id`,
 		element: <ViewTodo />,
 		errorElement: <ErrorPage />,
 	},
 	{
-		path: '/createTodo',
+		// @ts-ignore
+		path: `${window.globalConfig.BASE_PATH}/createTodo`,
 		element: <CreateTodo />,
 		errorElement: <ErrorPage />,
 	},
