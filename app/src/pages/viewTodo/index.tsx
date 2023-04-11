@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import _ from 'lodash'
+import styled from 'styled-components'
 
 import {
 	useLazyChangeTodoDescriptionQuery,
@@ -11,6 +12,38 @@ import {
 type PropsTodoViewer = {
 	id: string
 }
+
+const Wrapper = styled.div`
+	margin-top: 5rem;
+	padding: 2rem 3rem;
+	border: 1px solid rgb(219 112 147 / 20%);
+	border-radius: 7px;
+	width: 60rem;
+`
+
+const Title = styled.h4`
+	color: palevioletred;
+	font-weight: bold;
+	margin: 0 0 0.8rem 0;
+	font-size: 1.2em;
+`
+
+const Input = styled.input`
+	height: 3rem;
+	font-size: 1em;
+	margin-bottom: 0.3rem;
+	width: 100%;
+`
+const Button = styled.button`
+	outline: 0;
+	border: none;
+	border-radius: 7px;
+	background-color: palevioletred;
+	color: white;
+	font-weight: 400;
+	box-shadow: 0 4px 14px 0 rgb(219 112 147 / 20%);
+	margin-top: 1.1rem;
+`
 
 const TodoViewer = ({ id }: PropsTodoViewer) => {
 	const { data, error, isLoading, isError } = useViewTodoQuery({
@@ -33,9 +66,9 @@ const TodoViewer = ({ id }: PropsTodoViewer) => {
 	if (isError) return <div>{error.toString()}</div>
 
 	return (
-		<div>
-			<div>{data?.title}</div>
-			<input
+		<Wrapper>
+			<Title>{data?.title}</Title>
+			<Input
 				value={description}
 				onChange={e => {
 					setDescription(e.target.value)
@@ -47,18 +80,17 @@ const TodoViewer = ({ id }: PropsTodoViewer) => {
 						})
 				}}
 			/>
-			<div>{data?.isDone ? 'done' : 'not done'}</div>
-			<button
+			<p>{data?.isDone ? 'Done' : 'To do'}</p>
+			<Button
 				type='button'
-				style={{ backgroundColor: 'red' }}
 				onClick={async () => {
 					await query({ id })
 					navigate('/')
 				}}
 			>
 				Delete
-			</button>
-		</div>
+			</Button>
+		</Wrapper>
 	)
 }
 
